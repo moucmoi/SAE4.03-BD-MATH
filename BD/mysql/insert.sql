@@ -23,7 +23,7 @@ INSERT INTO COMPOSANT (nomC, id_composant, prix_unitaire) VALUES
 -- Inserts ASSEMBLER (pièces composées)
 INSERT INTO ASSEMBLER (idA, id_isA, quantite) VALUES
 -- Panneau de fuselage
-(5, 1, 8),  -- 8 vis en titane
+(5, 1, 9),  -- 9 vis en titane
 (5, 2, 20), -- 20 rivets en aluminium
 (5, 3, 4),  -- 4 raidisseurs composite
 (5, 4, 1),  -- 1 plaque en alliage
