@@ -1,0 +1,23 @@
+-- Table ASSEMBLAGE
+CREATE TABLE ASSEMBLAGE (
+    id_assemblage INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL
+);
+
+-- Table COMPOSANT
+CREATE TABLE COMPOSANT (
+    nomC VARCHAR(100),
+    id_composant INT PRIMARY KEY,
+    prix_unitaire DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_composant) REFERENCES ASSEMBLAGE(id_assemblage)
+);
+
+-- Table ASSEMBLER
+CREATE TABLE ASSEMBLER (
+    idA INT NOT NULL,
+    id_isA INT NOT NULL,
+    quantite INT NOT NULL CHECK (quantite > 0),
+    PRIMARY KEY (idA, id_isA),
+    FOREIGN KEY (idA) REFERENCES ASSEMBLAGE(id_assemblage),
+    FOREIGN KEY (id_isA) REFERENCES ASSEMBLAGE(id_assemblage)
+);
