@@ -1,5 +1,5 @@
 --requete 1
-
+SELECT nomC, sum(quantite) as quantite from COMPOSANT NATURAL JOIN ASSEMBLER GROUP BY(nomC);
 
 
 --requete 2
