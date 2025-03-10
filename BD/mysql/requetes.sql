@@ -1,5 +1,9 @@
 --requete 1
-SELECT nomC, sum(quantite) as quantite from COMPOSANT NATURAL JOIN ASSEMBLER GROUP BY(nomC);
+SELECT a.nom AS composant, sum(ass.quantite) as quantite
+FROM ASSEMBLAGE parent
+JOIN ASSEMBLER ass ON parent.id_assemblage = ass.idA
+JOIN ASSEMBLAGE a ON ass.id_isA = a.id_assemblage
+GROUP BY a.nom;
 
 
 --requete 2
