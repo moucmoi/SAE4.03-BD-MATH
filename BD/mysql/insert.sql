@@ -1,5 +1,3 @@
-
-
 -- Inserts ASSEMBLAGE
 INSERT INTO ASSEMBLAGE (nom) VALUES
 ('Vis en titane'),
