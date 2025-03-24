@@ -20,7 +20,7 @@ WITH RECURSIVE CompositionComplete AS (
     JOIN ASSEMBLER ASM ON CC.sous_element = ASM.idA
 )
 
-SELECT A.id_assemblage, A.nom, COUNT(DISTINCT CC.sous_element) AS nombre_composants_differents
+SELECT A.nom, COUNT(DISTINCT CC.sous_element) AS nombre_composants_differents
 FROM ASSEMBLAGE A LEFT JOIN CompositionComplete CC ON A.id_assemblage = CC.assemblage_principal LEFT JOIN COMPOSANT C ON CC.sous_element = C.id_composant
 WHERE A.id_assemblage NOT IN (SELECT id_composant FROM COMPOSANT)
 GROUP BY A.id_assemblage, A.nom
@@ -29,7 +29,7 @@ ORDER BY nombre_composants_differents DESC;
 
 
 --requete 3
-SELECT COUNT(*) FROM ASSEMBLAGE WHERE nom NOT IN (SELECT nomC FROM COMPOSANT);
+SELECT COUNT(*) as nombre_pieces_composees FROM ASSEMBLAGE WHERE nom NOT IN (SELECT nomC FROM COMPOSANT);
 
 
 
@@ -67,3 +67,24 @@ GROUP BY a.nom;
 
 
 --requete 5
+WITH RECURSIVE composants_recursifs AS (
+    SELECT 
+        a.idA AS id_piece_composee,
+        a.id_isA AS id_composant
+    FROM ASSEMBLER a
+
+    UNION ALL
+
+    SELECT 
+        cr.id_piece_composee,
+        a.id_isA
+    FROM composants_recursifs cr
+    JOIN ASSEMBLER a ON cr.id_composant = a.idA
+)
+
+SELECT 
+    (SELECT nom FROM ASSEMBLAGE WHERE id_assemblage = c.id_piece_composee) AS nom_piece_composee,
+    (SELECT nom FROM ASSEMBLAGE WHERE id_assemblage = c.id_composant) AS nom_composant
+FROM composants_recursifs c
+ORDER BY c.id_piece_composee, c.id_composant;
+
